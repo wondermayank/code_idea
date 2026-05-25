@@ -1,501 +1,536 @@
+cat > /mnt/user-data/outputs/index.html << 'HTMLEOF'
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Code Idea — by Wondermayank</title>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
   <style>
     :root {
       --white: #ffffff;
-      --light: #f0f8ff;
+      --bg: #f5faff;
       --blue-soft: #dbeeff;
       --blue-mid: #a8d4f5;
       --blue-accent: #3b9ede;
       --blue-deep: #1565a8;
+      --blue-dark: #0d2a45;
       --text-dark: #0d2a45;
       --text-mid: #2b5278;
-      --text-light: #5d87af;
-      --border: #c0ddf5;
-      --shadow: rgba(59, 158, 222, 0.15);
+      --text-light: #6593b8;
+      --border: #c8e2f8;
+      --card-bg: #ffffff;
+      --shadow-soft: rgba(59,158,222,0.10);
+      --shadow-hover: rgba(59,158,222,0.22);
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 
     body {
       font-family: 'DM Sans', sans-serif;
-      background: var(--white);
+      background: var(--bg);
       color: var(--text-dark);
       min-height: 100vh;
-      overflow-x: hidden;
     }
 
-    /* ── HEADER ── */
+    /* ═══════════ HEADER ═══════════ */
     header {
-      background: linear-gradient(135deg, #e8f5ff 0%, #f7fbff 50%, #dbeeff 100%);
+      background: linear-gradient(160deg, #e3f3ff 0%, #f7fbff 55%, #d6ecff 100%);
       border-bottom: 1.5px solid var(--border);
-      padding: 56px 40px 48px;
+      padding: 60px 24px 52px;
       text-align: center;
       position: relative;
       overflow: hidden;
     }
     header::before {
-      content: '';
+      content:'';
       position: absolute;
-      width: 500px; height: 500px;
-      background: radial-gradient(circle, rgba(59,158,222,0.12) 0%, transparent 70%);
-      top: -200px; left: 50%;
-      transform: translateX(-50%);
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(59,158,222,0.10) 0%, transparent 65%);
+      top: -280px; left: 50%; transform: translateX(-50%);
       pointer-events: none;
     }
+    /* floating dots decoration */
     header::after {
-      content: '';
+      content:'· · ·';
       position: absolute;
-      width: 300px; height: 2px;
-      background: linear-gradient(90deg, transparent, var(--blue-accent), transparent);
-      bottom: 0; left: 50%;
-      transform: translateX(-50%);
+      bottom: 14px; right: 28px;
+      font-size: 22px; letter-spacing: 6px;
+      color: var(--blue-mid);
+      pointer-events: none;
     }
 
-    .header-label {
+    .header-eyebrow {
       font-family: 'Syne', sans-serif;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 4px;
-      text-transform: uppercase;
+      font-size: 10.5px; font-weight: 700;
+      letter-spacing: 4px; text-transform: uppercase;
       color: var(--blue-accent);
-      margin-bottom: 14px;
+      margin-bottom: 16px;
     }
     h1 {
       font-family: 'Syne', sans-serif;
-      font-size: clamp(2.4rem, 6vw, 4.2rem);
+      font-size: clamp(2.6rem, 7vw, 4.6rem);
       font-weight: 800;
+      line-height: 1.0;
+      letter-spacing: -0.03em;
       color: var(--text-dark);
-      line-height: 1.05;
-      letter-spacing: -0.02em;
       margin-bottom: 12px;
     }
-    h1 span {
-      color: var(--blue-accent);
-    }
+    h1 em { color: var(--blue-accent); font-style: normal; }
     .header-sub {
-      font-size: 15px;
+      font-size: 14px; font-weight: 300;
       color: var(--text-light);
-      font-weight: 300;
       letter-spacing: 0.02em;
     }
-    .badge-count {
+    .header-sub strong { color: var(--text-mid); font-weight: 500; }
+    .pill-count {
       display: inline-block;
-      margin-top: 18px;
+      margin-top: 20px;
       background: var(--blue-accent);
       color: #fff;
       font-family: 'Syne', sans-serif;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      padding: 5px 16px;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 2.5px; text-transform: uppercase;
+      padding: 6px 18px;
       border-radius: 100px;
     }
 
-    /* ── SEARCH ── */
-    .search-wrap {
-      display: flex;
-      justify-content: center;
-      padding: 32px 20px 0;
+    /* ═══════════ SEARCH ═══════════ */
+    .search-section {
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 36px 20px 4px;
     }
     .search-box {
       position: relative;
-      width: 100%;
-      max-width: 480px;
     }
     .search-box input {
       width: 100%;
-      padding: 13px 20px 13px 48px;
+      padding: 14px 20px 14px 50px;
+      background: var(--white);
       border: 1.5px solid var(--border);
       border-radius: 50px;
-      background: var(--light);
       font-family: 'DM Sans', sans-serif;
       font-size: 14px;
       color: var(--text-dark);
       outline: none;
+      box-shadow: 0 2px 12px var(--shadow-soft);
       transition: border-color 0.2s, box-shadow 0.2s;
     }
     .search-box input::placeholder { color: var(--text-light); }
     .search-box input:focus {
       border-color: var(--blue-accent);
-      box-shadow: 0 0 0 4px rgba(59,158,222,0.1);
+      box-shadow: 0 0 0 4px rgba(59,158,222,0.12), 0 2px 12px var(--shadow-soft);
     }
-    .search-box svg {
-      position: absolute;
-      left: 17px; top: 50%;
+    .search-icon {
+      position: absolute; left: 18px; top: 50%;
       transform: translateY(-50%);
+      color: var(--text-light); pointer-events: none;
+    }
+    .result-info {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 12px;
       color: var(--text-light);
-      pointer-events: none;
+      min-height: 18px;
     }
 
-    /* ── GRID ── */
+    /* ═══════════ GRID ═══════════ */
     main {
-      max-width: 1300px;
+      max-width: 1360px;
       margin: 0 auto;
-      padding: 40px 24px 80px;
+      padding: 28px 20px 90px;
     }
-
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 18px;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 16px;
     }
 
-    /* ── CARD ── */
+    /* ═══════════ CARD ═══════════ */
     .card {
       position: relative;
-      background: var(--white);
+      display: flex;
+      flex-direction: column;
+      background: var(--card-bg);
       border: 1.5px solid var(--border);
-      border-radius: 14px;
+      border-radius: 16px;
       overflow: hidden;
-      transition: transform 0.28s cubic-bezier(.22,.68,0,1.4),
-                  box-shadow 0.28s ease,
-                  border-color 0.2s;
-      cursor: pointer;
       text-decoration: none;
-      display: block;
-      animation: fadeUp 0.4s ease both;
+      color: inherit;
+      transition:
+        transform 0.30s cubic-bezier(.22,.68,0,1.35),
+        box-shadow 0.28s ease,
+        border-color 0.22s;
+      animation: riseIn 0.45s ease both;
     }
     .card:hover {
-      transform: translateY(-5px) scale(1.01);
-      box-shadow: 0 12px 36px var(--shadow), 0 2px 8px rgba(59,158,222,0.1);
+      transform: translateY(-6px) scale(1.015);
+      box-shadow: 0 16px 44px var(--shadow-hover), 0 3px 10px rgba(59,158,222,0.08);
       border-color: var(--blue-accent);
     }
 
-    /* Frame hover corner borders */
-    .card::before,
-    .card::after,
-    .card .corner-br,
-    .card .corner-tl {
-      content: '';
-      position: absolute;
-      width: 18px; height: 18px;
-      border-color: var(--blue-accent);
-      border-style: solid;
-      opacity: 0;
-      transition: opacity 0.25s ease, width 0.25s ease, height 0.25s ease;
-      z-index: 2;
-    }
-    .card::before { top: -1px; left: -1px; border-width: 2px 0 0 2px; border-radius: 14px 0 0 0; }
-    .card::after  { top: -1px; right: -1px; border-width: 2px 2px 0 0; border-radius: 0 14px 0 0; }
-    .card .corner-br { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; border-radius: 0 0 14px 0; }
-    .card .corner-tl { bottom: -1px; left: -1px; border-width: 0 0 2px 2px; border-radius: 0 0 0 14px; }
+    /* ── animated corner frames (Frame Hover Effect) ── */
+    .card .fc { position: absolute; width: 0; height: 0; border-style: solid; border-color: var(--blue-accent); border-width: 0; opacity: 0; transition: width 0.28s ease, height 0.28s ease, opacity 0.22s ease; }
+    .card .fc-tl { top: -1px; left: -1px; border-width: 2.5px 0 0 2.5px; border-radius: 16px 0 0 0; }
+    .card .fc-tr { top: -1px; right: -1px; border-width: 2.5px 2.5px 0 0; border-radius: 0 16px 0 0; }
+    .card .fc-bl { bottom: -1px; left: -1px; border-width: 0 0 2.5px 2.5px; border-radius: 0 0 0 16px; }
+    .card .fc-br { bottom: -1px; right: -1px; border-width: 0 2.5px 2.5px 0; border-radius: 0 0 16px 0; }
+    .card:hover .fc { width: 28px; height: 28px; opacity: 1; }
 
-    .card:hover::before,
-    .card:hover::after,
-    .card:hover .corner-br,
-    .card:hover .corner-tl {
-      opacity: 1;
-      width: 26px; height: 26px;
-    }
-
-    /* Card top strip */
-    .card-strip {
-      height: 5px;
-      background: linear-gradient(90deg, var(--blue-mid), var(--blue-accent));
+    /* ── top slide bar ── */
+    .card-bar {
+      height: 4px;
+      background: linear-gradient(90deg, var(--blue-mid), var(--blue-accent), #6ec6ff);
       width: 0%;
-      transition: width 0.35s ease;
+      transition: width 0.38s cubic-bezier(.4,0,.2,1);
+      flex-shrink: 0;
     }
-    .card:hover .card-strip { width: 100%; }
+    .card:hover .card-bar { width: 100%; }
 
+    /* ── card body ── */
     .card-body {
-      padding: 20px 18px 18px;
+      padding: 18px 16px 16px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .card-top {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
     }
 
     .card-icon {
-      width: 38px; height: 38px;
+      flex-shrink: 0;
+      width: 36px; height: 36px;
       background: var(--blue-soft);
       border-radius: 10px;
       display: flex; align-items: center; justify-content: center;
-      margin-bottom: 12px;
-      transition: background 0.2s, transform 0.2s;
+      transition: background 0.22s, transform 0.28s cubic-bezier(.22,.68,0,1.4);
+      color: var(--blue-deep);
     }
     .card:hover .card-icon {
       background: var(--blue-mid);
-      transform: rotate(-6deg) scale(1.1);
+      transform: rotate(-8deg) scale(1.12);
     }
-    .card-icon svg { color: var(--blue-deep); }
 
     .card-title {
       font-family: 'Syne', sans-serif;
-      font-size: 13.5px;
-      font-weight: 700;
+      font-size: 13px; font-weight: 700;
       color: var(--text-dark);
-      line-height: 1.4;
-      margin-bottom: 8px;
+      line-height: 1.38;
+      flex: 1;
+      padding-top: 2px;
     }
 
+    /* dist / subfolder badge */
+    .card-path-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10px; font-weight: 500;
+      color: var(--blue-accent);
+      background: var(--blue-soft);
+      border: 1px solid var(--blue-mid);
+      border-radius: 6px;
+      padding: 2px 7px;
+      letter-spacing: 0.3px;
+      width: fit-content;
+    }
+    .card-path-badge svg { flex-shrink: 0; }
+
+    /* ── bottom CTA row ── */
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px 14px;
+    }
     .card-btn {
       display: inline-flex;
       align-items: center;
       gap: 5px;
       font-family: 'DM Sans', sans-serif;
-      font-size: 11.5px;
-      font-weight: 500;
+      font-size: 11.5px; font-weight: 500;
       color: var(--blue-accent);
-      letter-spacing: 0.5px;
-      padding: 5px 12px;
+      background: var(--blue-soft);
       border: 1.5px solid var(--blue-mid);
       border-radius: 100px;
-      background: var(--light);
-      transition: background 0.2s, border-color 0.2s, color 0.2s;
+      padding: 5px 13px;
+      text-decoration: none;
+      transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.15s;
     }
     .card:hover .card-btn {
       background: var(--blue-accent);
       border-color: var(--blue-accent);
       color: #fff;
     }
-    .card-btn svg { transition: transform 0.2s; }
-    .card:hover .card-btn svg { transform: translateX(3px); }
+    .card-btn .arrow { transition: transform 0.2s; }
+    .card:hover .card-btn .arrow { transform: translateX(3px); }
 
-    /* ── NO RESULTS ── */
-    #no-results {
+    /* ═══════════ EMPTY STATE ═══════════ */
+    #empty {
       display: none;
+      grid-column: 1/-1;
       text-align: center;
-      padding: 60px 20px;
+      padding: 70px 20px;
       color: var(--text-light);
-      font-size: 15px;
     }
+    #empty svg { margin-bottom: 14px; opacity: .4; }
+    #empty p { font-size: 15px; }
 
-    /* ── FOOTER ── */
+    /* ═══════════ FOOTER ═══════════ */
     footer {
       text-align: center;
-      padding: 24px;
+      padding: 22px 20px;
       border-top: 1.5px solid var(--border);
-      font-size: 13px;
+      font-size: 12.5px;
       color: var(--text-light);
+      background: var(--white);
     }
     footer a { color: var(--blue-accent); text-decoration: none; }
     footer a:hover { text-decoration: underline; }
 
-    /* ── ANIMATIONS ── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(18px); }
+    /* ═══════════ ANIMATIONS ═══════════ */
+    @keyframes riseIn {
+      from { opacity: 0; transform: translateY(20px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-    .card:nth-child(1)  { animation-delay: 0.02s }
-    .card:nth-child(2)  { animation-delay: 0.04s }
-    .card:nth-child(3)  { animation-delay: 0.06s }
-    .card:nth-child(4)  { animation-delay: 0.08s }
-    .card:nth-child(5)  { animation-delay: 0.10s }
-    .card:nth-child(6)  { animation-delay: 0.12s }
-    .card:nth-child(7)  { animation-delay: 0.14s }
-    .card:nth-child(8)  { animation-delay: 0.16s }
-    .card:nth-child(9)  { animation-delay: 0.18s }
-    .card:nth-child(10) { animation-delay: 0.20s }
-    .card:nth-child(n+11) { animation-delay: 0.22s }
 
-    @media (max-width: 600px) {
-      header { padding: 40px 20px 36px; }
-      main { padding: 28px 14px 60px; }
-      .grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+    @media (max-width: 540px) {
+      header { padding: 44px 16px 38px; }
+      main { padding: 20px 12px 60px; }
+      .grid { grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 11px; }
+      .card-title { font-size: 12px; }
     }
   </style>
 </head>
 <body>
 
 <header>
-  <div class="header-label">Open Source Collection</div>
-  <h1>Code <span>Idea</span></h1>
-  <p class="header-sub">Creative CSS &amp; JavaScript experiments by <strong>Wondermayank</strong></p>
-  <div class="badge-count" id="total-count">— Projects</div>
+  <div class="header-eyebrow">Open Source · CSS &amp; JavaScript</div>
+  <h1>Code <em>Idea</em></h1>
+  <p class="header-sub">Creative experiments by <strong>Wondermayank</strong></p>
+  <div class="pill-count" id="pill">— Projects</div>
 </header>
 
-<div class="search-wrap">
+<div class="search-section">
   <div class="search-box">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
       <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
     </svg>
-    <input type="text" id="search" placeholder="Search projects…" autocomplete="off"/>
+    <input type="text" id="search" placeholder="Search projects…" autocomplete="off" spellcheck="false"/>
   </div>
+  <div class="result-info" id="result-info"></div>
 </div>
 
 <main>
   <div class="grid" id="grid"></div>
-  <div id="no-results">No projects found for "<span id="search-term"></span>"</div>
 </main>
 
 <footer>
-  Made with ♥ &nbsp;·&nbsp; <a href="https://github.com/wondermayank/code_idea" target="_blank">wondermayank / code_idea</a>
+  Made with ♥ &nbsp;·&nbsp;
+  <a href="https://github.com/wondermayank/code_idea" target="_blank" rel="noopener">wondermayank / code_idea</a>
+  &nbsp;·&nbsp; GitHub Pages Index
 </footer>
 
 <script>
-  const BASE = "https://wondermayank.github.io/code_idea/";
+const BASE = "https://wondermayank.github.io/code_idea/";
 
-  const folders = [
-    "10 Different Pulse Effect",
-    "10 Different Spinner",
-    "3D Flipping Text",
-    "3D Navigation Menu",
-    "3d Card With Hover",
-    "4 Dot Liquid Loader",
-    "403 Landing Page",
-    "9 Dot Navigation",
-    "9 Dots Navigation updated",
-    "Animated Skills Bar",
-    "Beer 404 Page",
-    "Butterfly Share Button",
-    "Button Ripple Effect",
-    "CSS Cube Hover effect",
-    "Capture Screenshot in JavaScript",
-    "Card Hover Effect V1",
-    "Card Hover Effect V2",
-    "Card Hover Effect V3",
-    "Circular Progress Bar",
-    "Corner Menu",
-    "Creative Link Hover",
-    "Custom Captcha Generator using JS",
-    "Custom-Scrollbar",
-    "Dark & Light - Calculator",
-    "Detect Battery Status",
-    "Digital Clock With Reflection",
-    "Download Button",
-    "Drop Liquid Loading",
-    "Dynamic Calendar JavaScript",
-    "Dynamic Stopwatch",
-    "Forest Parallex Website",
-    "Frame Hover Effect",
-    "Full Overlay Navigation",
-    "Glassmorph Calculator",
-    "Glassmorph Loader",
-    "Glassmorphism Analog Clock",
-    "Glassmorphism Credit Card",
-    "Glassmorphism Login Form",
-    "Glowing Gradient Button",
-    "Glowing Input Login Form",
-    "Glowing Login Form",
-    "Glowing Menu Hover",
-    "Glowing Neon Button",
-    "Glowing Neon Buttons",
-    "Google Fiber Loader",
-    "Gradient Button hover",
-    "Hacker Login Form",
-    "Heart Checkbox",
-    "Heart Loader",
-    "Heart Rate Animation",
-    "I Love You Animation",
-    "I love You Card",
-    "Indian Flag using CSS",
-    "Input Animation",
-    "Item Card Hover Effect",
-    "Juicy Hamburgers Menu",
-    "Light & Dark Toggle button",
-    "Lines Background Animation",
-    "Liquid Loader",
-    "Magic Indicator Menu",
-    "Magic Navigation Menu 2",
-    "Magic Navigation Menu",
-    "Magic Social Share Menu",
-    "Memory Card Game",
-    "Moon Animation",
-    "Naughty Submit Button",
-    "Neon Button",
-    "Neon Dash Loader",
-    "Neon Navigation",
-    "Neumorphism Calculator with Dark-light",
-    "Neumorphism Clock",
-    "Neumorphism Rocket Loader",
-    "Ninja Calculator",
-    "Pagination V1",
-    "Parallax Scrolling Website",
-    "Particles Button",
-    "Password Generator",
-    "Password Input Light",
-    "Password Validator JS",
-    "Password strength checker",
-    "Product Card Info",
-    "Quadratic loader",
-    "Responsive Footer for Contact Us",
-    "Responsive Grid Tracks",
-    "Responsive Service Section",
-    "Search Bar",
-    "Search Box",
-    "Sign up for newsletter",
-    "Simple Alarm Clock",
-    "Skeuomorphism-Button",
-    "Skype Loader",
-    "Slide out social button",
-    "Sliding Product Card",
-    "Snake Login Form",
-    "Snake Game in JavaScript",
-    "Snake Glowing Button",
-    "Sneakers Product Card",
-    "Social Share Button",
-    "Space Parallex Scrolling"
-  ];
+// Each entry: { name (display), path (URL segment after BASE) }
+// path already includes /dist or nested subfolder where needed
+const projects = [
+  { name:"10 Different Pulse Effect",           path:"10 Different Pulse Effect/" },
+  { name:"10 Different Spinner",                path:"10 Different Spinner/" },
+  { name:"3D Flipping Text",                    path:"3D Flipping Text/" },
+  { name:"3D Navigation Menu",                  path:"3D Navigation Menu/dist/" },
+  { name:"3d Card With Hover",                  path:"3d Card With Hover/" },
+  { name:"4 Dot Liquid Loader",                 path:"4 Dot Liquid Loader/" },
+  { name:"403 Landing Page",                    path:"403 Landing Page/" },
+  { name:"9 Dot Navigation",                    path:"9 Dot Navigation/" },
+  { name:"9 Dots Navigation updated",           path:"9 Dots Navigation updated/" },
+  { name:"Animated Skills Bar",                 path:"Animated Skills Bar/" },
+  { name:"Beer 404 Page",                       path:"Beer 404 Page/" },
+  { name:"Butterfly Share Button",              path:"Butterfly Share Button/" },
+  { name:"Button Ripple Effect",                path:"Button Ripple Effect/dist/" },
+  { name:"CSS Cube Hover effect",               path:"CSS Cube Hover effect/" },
+  { name:"Capture Screenshot in JavaScript",    path:"Capture Screenshot in JavaScript/" },
+  { name:"Card Hover Effect V1",                path:"Card Hover Effect V1/" },
+  { name:"Card Hover Effect V2",                path:"Card Hover Effect V2/" },
+  { name:"Card Hover Effect V3",                path:"Card Hover Effect V3/" },
+  { name:"Circular Progress Bar",               path:"Circular Progress Bar/" },
+  { name:"Corner Menu",                         path:"Corner Menu/Corner Menu/" },
+  { name:"Creative Link Hover",                 path:"Creative Link Hover/dist/" },
+  { name:"Custom Captcha Generator using JS",   path:"Custom Captcha Generator using JS/dist/" },
+  { name:"Custom Scrollbar",                    path:"Custom-Scrollbar/" },
+  { name:"Dark & Light Calculator",             path:"Dark & Light - Calculator/" },
+  { name:"Detect Battery Status",               path:"Detect Battery Status/" },
+  { name:"Digital Clock With Reflection",       path:"Digital Clock With Reflection/" },
+  { name:"Download Button",                     path:"Download Button/" },
+  { name:"Drop Liquid Loading",                 path:"Drop Liquid Loading/" },
+  { name:"Dynamic Calendar JavaScript",         path:"Dynamic Calendar JavaScript/" },
+  { name:"Dynamic Stopwatch",                   path:"Dynamic Stopwatch/" },
+  { name:"Forest Parallex Website",             path:"Forest Parallex Website/dist/" },
+  { name:"Frame Hover Effect",                  path:"Frame Hover Effect/" },
+  { name:"Full Overlay Navigation",             path:"Full Overlay Navigation/" },
+  { name:"Glassmorph Calculator",               path:"Glassmorph Calculator/" },
+  { name:"Glassmorph Loader",                   path:"Glassmorph Loader/" },
+  { name:"Glassmorphism Analog Clock",          path:"Glassmorphism Analog Clock/Glassmorphism-Analog-Clock-using-CSS-and-JavaScript-Main/" },
+  { name:"Glassmorphism Credit Card",           path:"Glassmorphism Credit Card/" },
+  { name:"Glassmorphism Login Form",            path:"Glassmorphism Login Form/Glassmorphism Login Form/" },
+  { name:"Glowing Gradient Button",             path:"Glowing Gradient Button/dist/" },
+  { name:"Glowing Input Login Form",            path:"Glowing Input Login Form/Glowing Input Login Form/" },
+  { name:"Glowing Login Form",                  path:"Glowing Login Form/" },
+  { name:"Glowing Menu Hover",                  path:"Glowing Menu Hover/dist/" },
+  { name:"Glowing Neon Button",                 path:"Glowing Neon Button/dist/" },
+  { name:"Glowing Neon Buttons",                path:"Glowing Neon Buttons/dist/" },
+  { name:"Google Fiber Loader",                 path:"Google Fiber Loader/dist/" },
+  { name:"Gradient Button Hover",               path:"Gradient Button hover/dist/" },
+  { name:"Hacker Login Form",                   path:"Hacker Login Form/dist/" },
+  { name:"Heart Checkbox",                      path:"Heart Checkbox/dist/" },
+  { name:"Heart Loader",                        path:"Heart Loader/dist/" },
+  { name:"Heart Rate Animation",                path:"Heart Rate Animation/" },
+  { name:"I Love You Animation",                path:"I Love You Animation/" },
+  { name:"I Love You Card",                     path:"I love You Card/" },
+  { name:"Indian Flag using CSS",               path:"Indian Flag using CSS/" },
+  { name:"Input Animation",                     path:"Input Animation/dist/" },
+  { name:"Item Card Hover Effect",              path:"Item Card Hover Effect/" },
+  { name:"Juicy Hamburgers Menu",               path:"Juicy Hamburgers Menu/" },
+  { name:"Light & Dark Toggle button",          path:"Light & Dark Toggle button/dist/" },
+  { name:"Lines Background Animation",          path:"Lines Background Animation/dist/" },
+  { name:"Liquid Loader",                       path:"Liquid Loader/" },
+  { name:"Magic Indicator Menu",                path:"Magic Indicator Menu/dist/" },
+  { name:"Magic Navigation Menu 2",             path:"Magic Navigation Menu 2/dist/" },
+  { name:"Magic Navigation Menu",               path:"Magic Navigation Menu/dist/" },
+  { name:"Magic Social Share Menu",             path:"Magic Social Share Menu/dist/" },
+  { name:"Memory Card Game",                    path:"Memory Card Game/" },
+  { name:"Moon Animation",                      path:"Moon Animation/Moon Animation/" },
+  { name:"Naughty Submit Button",               path:"Naughty Submit Button/dist/" },
+  { name:"Neon Button",                         path:"Neon Button/" },
+  { name:"Neon Dash Loader",                    path:"Neon Dash Loader/" },
+  { name:"Neon Navigation",                     path:"Neon Navigation/" },
+  { name:"Neumorphism Calculator",              path:"Neumorphism Calculator with Dark-light/dist/" },
+  { name:"Neumorphism Clock",                   path:"Neumorphism Clock/" },
+  { name:"Neumorphism Rocket Loader",           path:"Neumorphism Rocket Loader/dist/" },
+  { name:"Ninja Calculator",                    path:"Ninja Calculator/dist/" },
+  { name:"Pagination V1",                       path:"Pagination V1/" },
+  { name:"Parallax Scrolling Website",          path:"Parallax Scrolling Website/" },
+  { name:"Particles Button",                    path:"Particles Button/" },
+  { name:"Password Generator",                  path:"Password Generator/dist/" },
+  { name:"Password Input Light",                path:"Password Input Light/dist/" },
+  { name:"Password Validator JS",               path:"Password Validator JS/dist/" },
+  { name:"Password Strength Checker",           path:"Password strength checker/dist/" },
+  { name:"Product Card Info",                   path:"Product Card Info/" },
+  { name:"Quadratic Loader",                    path:"Quadratic loader/" },
+  { name:"Responsive Footer for Contact Us",    path:"Responsive Footer for Contact Us/" },
+  { name:"Responsive Grid Tracks",              path:"Responsive Grid Tracks/" },
+  { name:"Responsive Service Section",          path:"Responsive Service Section/dist/" },
+  { name:"Search Bar",                          path:"Search Bar/" },
+  { name:"Search Box",                          path:"Search Box/" },
+  { name:"Sign up for newsletter",              path:"Sign up for newsletter/" },
+  { name:"Simple Alarm Clock",                  path:"Simple Alarm Clock/" },
+  { name:"Skeuomorphism Button",                path:"Skeuomorphism-Button/Skeuomorphism Button/" },
+  { name:"Skype Loader",                        path:"Skype Loader/" },
+  { name:"Slide out social button",             path:"Slide out social button/" },
+  { name:"Sliding Product Card",                path:"Sliding Product Card/" },
+  { name:"Snake Login Form (dist)",             path:"Snake  Login Form/dist/" },
+  { name:"Snake Game in JavaScript",            path:"Snake Game in JavaScript/Snake Game in JavaScript/" },
+  { name:"Snake Glowing Button",                path:"Snake Glowing Button/dist/" },
+  { name:"Snake Login Form",                    path:"Snake Login Form/" },
+  { name:"Sneakers Product Card",               path:"Sneakers Product Card/" },
+  { name:"Social Share Button",                 path:"Social Share Button/" },
+  { name:"Space Parallex Scrolling",            path:"Space Parallex Scrolling/dist/" },
+];
 
-  // Simple icon pool — cycles through
-  const icons = [
-    // Sparkles
-    `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`,
-    // Code
-    `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`,
-    // Layers
-    `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>`,
-    // Zap
-    `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`,
-    // Box
-    `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>`,
-    // Globe
-    `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`,
-  ];
+// ── Icons pool
+const ICONS = [
+  `<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`,
+  `<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`,
+  `<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>`,
+  `<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`,
+  `<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`,
+  `<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>`,
+  `<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
+  `<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>`,
+];
 
-  const grid = document.getElementById('grid');
-  const noResults = document.getElementById('no-results');
-  const searchInput = document.getElementById('search');
-  const totalCount = document.getElementById('total-count');
+// ── Determine subfolder label for badge
+function getSubLabel(path) {
+  const p = path.replace(/\/$/, '');
+  const parts = p.split('/');
+  if (parts.length < 2) return null;
+  const sub = parts[parts.length - 1];
+  return sub; // e.g. "dist", "Moon Animation", "Glassmorphism-Analog..."
+}
 
-  totalCount.textContent = folders.length + ' Projects';
+const ARROW = `<svg class="arrow" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>`;
+const FOLDER_ICON = `<svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>`;
 
-  function buildURL(name) {
-    return BASE + encodeURIComponent(name) + '/';
+const grid = document.getElementById('grid');
+const pill = document.getElementById('pill');
+const searchEl = document.getElementById('search');
+const resultInfo = document.getElementById('result-info');
+
+pill.textContent = projects.length + ' Projects';
+
+function buildCard(p, i) {
+  const url = BASE + p.path.split('/').map(encodeURIComponent).join('/');
+  const icon = ICONS[i % ICONS.length];
+  const sub = getSubLabel(p.path);
+  const showBadge = sub && sub !== p.name;
+
+  const card = document.createElement('a');
+  card.className = 'card';
+  card.href = url;
+  card.target = '_blank';
+  card.rel = 'noopener noreferrer';
+  card.style.animationDelay = Math.min(i * 0.025, 0.5) + 's';
+
+  card.innerHTML = `
+    <div class="fc fc-tl"></div><div class="fc fc-tr"></div>
+    <div class="fc fc-bl"></div><div class="fc fc-br"></div>
+    <div class="card-bar"></div>
+    <div class="card-body">
+      <div class="card-top">
+        <div class="card-icon">${icon}</div>
+        <div class="card-title">${p.name}</div>
+      </div>
+      ${showBadge ? `<div class="card-path-badge">${FOLDER_ICON} ${sub}</div>` : ''}
+    </div>
+    <div class="card-footer">
+      <span class="card-btn">View Demo ${ARROW}</span>
+    </div>`;
+  return card;
+}
+
+function render(list) {
+  grid.innerHTML = '';
+  if (!list.length) {
+    const empty = document.createElement('div');
+    empty.id = 'empty';
+    empty.style.display = 'block';
+    empty.innerHTML = `<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><p>No projects match your search.</p>`;
+    grid.appendChild(empty);
+    resultInfo.textContent = '';
+    return;
   }
+  list.forEach((p, i) => grid.appendChild(buildCard(p, i)));
+  resultInfo.textContent = list.length < projects.length
+    ? `Showing ${list.length} of ${projects.length} projects`
+    : '';
+}
 
-  function renderCards(list) {
-    grid.innerHTML = '';
-    if (list.length === 0) {
-      noResults.style.display = 'block';
-      return;
-    }
-    noResults.style.display = 'none';
-    list.forEach((name, i) => {
-      const icon = icons[i % icons.length];
-      const url = buildURL(name);
-      const card = document.createElement('a');
-      card.className = 'card';
-      card.href = url;
-      card.target = '_blank';
-      card.rel = 'noopener noreferrer';
-      card.innerHTML = `
-        <div class="corner-br"></div>
-        <div class="corner-tl"></div>
-        <div class="card-strip"></div>
-        <div class="card-body">
-          <div class="card-icon">${icon}</div>
-          <div class="card-title">${name}</div>
-          <span class="card-btn">
-            View Demo
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </span>
-        </div>
-      `;
-      grid.appendChild(card);
-    });
-  }
+render(projects);
 
-  renderCards(folders);
-
-  searchInput.addEventListener('input', () => {
-    const q = searchInput.value.trim().toLowerCase();
-    document.getElementById('search-term').textContent = searchInput.value.trim();
-    if (!q) { renderCards(folders); return; }
-    renderCards(folders.filter(f => f.toLowerCase().includes(q)));
-  });
+searchEl.addEventListener('input', () => {
+  const q = searchEl.value.trim().toLowerCase();
+  if (!q) { render(projects); return; }
+  render(projects.filter(p => p.name.toLowerCase().includes(q) || p.path.toLowerCase().includes(q)));
+});
 </script>
 </body>
 </html>
